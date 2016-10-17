@@ -46,12 +46,17 @@ class Domains
     }
 
     /**
-     * Get one domain by its id.
+     * Get one domain by its domain name or id.
+     * If $id is not numeric, prepend 'id/' to use the /dns/managed/id/$id endpoint
      * @param  integer             $id
      * @return \DNSMadeEasy\Result
      */
     public function get($id)
     {
+        if (!is_numeric($id)) {
+            $id = "id/$id";
+	}
+
         return $this->_driver->get("/dns/managed/$id");
     }
 
